@@ -41,8 +41,7 @@ const micBtn = document.getElementById('micBtn');
 const refBtn = document.getElementById('refBtn');
 const tunerDisplay = document.getElementById('tunerDisplay');
 const settingsBtn = document.getElementById('settingsBtn');
-const modalOverlay = document.getElementById('modalOverlay');
-const modalClose = document.getElementById('modalClose');
+const settingsPanel = document.getElementById('settingsPanel');
 const modeBtns = document.querySelectorAll('.mode-btn');
 const themeBtns = document.querySelectorAll('.theme-btn');
 const stringBtns = document.querySelectorAll('.string-btn');
@@ -57,24 +56,20 @@ function initSettings() {
 
 function setMode(mode) {
     document.documentElement.setAttribute('data-mode', mode);
-    localStorage.setItem('mw-uku-mode', mode);
     modeBtns.forEach(b => b.classList.toggle('active', b.dataset.mode === mode));
 }
 
 function setTheme(theme) {
     document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('mw-uku-theme', theme);
     themeBtns.forEach(b => b.classList.toggle('active', b.dataset.theme === theme));
 }
 
 modeBtns.forEach(b => b.addEventListener('click', () => setMode(b.dataset.mode)));
 themeBtns.forEach(b => b.addEventListener('click', () => setTheme(b.dataset.theme)));
 
-// === MODAL ===
-settingsBtn.addEventListener('click', () => modalOverlay.classList.add('open'));
-modalClose.addEventListener('click', () => modalOverlay.classList.remove('open'));
-modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) modalOverlay.classList.remove('open'); });
-document.addEventListener('keydown', (e) => { if (e.key === 'Escape') modalOverlay.classList.remove('open'); });
+// === SETTINGS PANEL ===
+settingsBtn.addEventListener('click', () => settingsPanel.classList.toggle('open'));
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') settingsPanel.classList.remove('open'); });
 
 // === STRING SELECTION ===
 stringBtns.forEach(btn => {
@@ -147,7 +142,7 @@ function stopListening() {
 
 // === PITCH DETECTION (AMDF + parabolic interpolation) ===
 function detect() {
-    if (!isListening || !analyser) return;
+    if (!isListening || !analyser || !audioCtx) return;
     analyser.getFloatTimeDomainData(pitchBuffer);
 
     let rms = 0;
@@ -201,6 +196,14 @@ function autoCorrelate(buf, sampleRate) {
 }
 
 // === UPDATE TUNER ===
+let lastStatusText = '';
+function setStatus(text) {
+    if (text !== lastStatusText) {
+        tuningStatus.textContent = text;
+        lastStatusText = text;
+    }
+}
+
 function updateTuner(detectedFreq) {
     let targetFreq, targetNote;
     if (selectedString) {
@@ -231,16 +234,16 @@ function updateTuner(detectedFreq) {
         meterIndicator.classList.add('in-tune');
         noteDisplay.style.color = 'var(--in-tune)';
         tunerDisplay.classList.add('in-tune');
-        tuningStatus.textContent = 'afinado';
+        setStatus('afinado');
         tuningStatus.classList.add('in-tune');
     } else if (absCents <= 15) {
         meterIndicator.classList.add('close');
         noteDisplay.style.color = '#d97706';
-        tuningStatus.textContent = cents > 0 ? 'un poco alto ♯' : 'un poco bajo ♭';
+        setStatus(cents > 0 ? 'un poco alto ♯' : 'un poco bajo ♭');
     } else {
         meterIndicator.classList.add('out-tune');
         noteDisplay.style.color = '#dc2626';
-        tuningStatus.textContent = cents > 0 ? 'muy alto ♯' : 'muy bajo ♭';
+        setStatus(cents > 0 ? 'muy alto ♯' : 'muy bajo ♭');
     }
 }
 
@@ -272,6 +275,12 @@ function toggleReferenceTone() {
 function playReferenceTone() {
     if (!selectedString) { tuningStatus.textContent = 'selecciona una cuerda'; return; }
     const target = STRINGS[selectedString];
+
+    // Stop any currently playing tone first
+    if (refOscillator) {
+        try { refOscillator.stop(); } catch (e) { /* already ended */ }
+        refOscillator = null;
+    }
 
     if (!refAudioCtx || refAudioCtx.state === 'closed') {
         refAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -314,6 +323,7 @@ function resetDisplay() {
     meterIndicator.className = 'meter-indicator';
     centsDisplay.textContent = '0 cents';
     tuningStatus.textContent = 'selecciona una cuerda o activa el micrófono';
+    lastStatusText = '';
     tuningStatus.classList.remove('in-tune');
     tunerDisplay.classList.remove('in-tune');
 }
