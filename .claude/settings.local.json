@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git branch -m main)",
+      "Bash(gh repo create ukulele --public --source=. --push --description \"Afinador de ukulele online — meowrhino studio\")",
+      "Bash(gh api repos/meowrhino/ukulele/pages -X POST -f \"build_type=workflow\")",
+      "Bash(gh api repos/meowrhino/ukulele/pages -X POST -f \"source[branch]=main\" -f \"source[path]=/\")",
+      "Bash(gh api repos/meowrhino/ukulele/pages -X PUT -f \"source[branch]=main\" -f \"source[path]=/\" -f \"build_type=legacy\")"
+    ]
+  }
+}

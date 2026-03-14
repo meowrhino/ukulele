@@ -70,6 +70,32 @@ function updateThemeIcon() {
 themeToggle.addEventListener('click', toggleTheme);
 initTheme();
 
+// === STYLE TOGGLE (brutal / minimal) ===
+const styleToggle = document.getElementById('styleToggle');
+const styleLabel = document.getElementById('styleLabel');
+
+function initStyle() {
+    const saved = localStorage.getItem('meowrhino-ukulele-style') || 'brutal';
+    document.documentElement.setAttribute('data-style', saved);
+    updateStyleLabel();
+}
+
+function toggleStyle() {
+    const current = document.documentElement.getAttribute('data-style');
+    const next = current === 'minimal' ? 'brutal' : 'minimal';
+    document.documentElement.setAttribute('data-style', next);
+    localStorage.setItem('meowrhino-ukulele-style', next);
+    updateStyleLabel();
+}
+
+function updateStyleLabel() {
+    const style = document.documentElement.getAttribute('data-style');
+    styleLabel.textContent = style === 'minimal' ? 'minimal' : 'brutal';
+}
+
+styleToggle.addEventListener('click', toggleStyle);
+initStyle();
+
 // === STRING SELECTION ===
 stringBtns.forEach(btn => {
     btn.addEventListener('click', () => {

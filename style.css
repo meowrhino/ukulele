@@ -446,6 +446,162 @@ footer a:hover {
     background: var(--text);
 }
 
+/* === STYLE TOGGLE BUTTON === */
+.header-controls {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.style-toggle {
+    height: 40px;
+    padding: 0 0.75rem;
+    border: var(--border-w) solid var(--border);
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    font-weight: 700;
+    cursor: pointer;
+    text-transform: lowercase;
+    letter-spacing: 0.05em;
+    box-shadow: var(--shadow);
+    transition: transform 0.1s, box-shadow 0.1s, border-radius 0.4s, border-width 0.4s;
+}
+
+.style-toggle:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: var(--shadow-hover);
+}
+
+.style-toggle:active {
+    transform: translate(2px, 2px);
+    box-shadow: var(--shadow-active);
+}
+
+/* === MINIMAL STYLE OVERRIDES === */
+[data-style="minimal"] {
+    --bg: #ffffff;
+    --border-w: 1px;
+    --shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    --shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.12);
+    --shadow-active: 0 1px 2px rgba(0, 0, 0, 0.06);
+    --radius: 12px;
+    --meter-track: #f3f4f6;
+}
+
+[data-style="minimal"][data-theme="dark"] {
+    --bg: #121212;
+    --border: #e0e0e0;
+    --shadow: 0 1px 3px rgba(255, 255, 255, 0.06);
+    --shadow-hover: 0 4px 12px rgba(255, 255, 255, 0.1);
+    --shadow-active: 0 1px 2px rgba(255, 255, 255, 0.04);
+    --meter-track: #222;
+}
+
+[data-style="minimal"] body {
+    font-family: 'Inknut Antiqua', serif;
+}
+
+[data-style="minimal"] h1 {
+    font-family: 'Inknut Antiqua', serif;
+    font-weight: 900;
+    letter-spacing: 0.01em;
+}
+
+[data-style="minimal"] .strings-section h2 {
+    font-family: 'Inknut Antiqua', serif;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+}
+
+[data-style="minimal"] .tuner-display,
+[data-style="minimal"] .string-btn,
+[data-style="minimal"] .mic-btn,
+[data-style="minimal"] .ref-btn,
+[data-style="minimal"] .theme-toggle,
+[data-style="minimal"] .style-toggle,
+[data-style="minimal"] .meter {
+    border-radius: var(--radius);
+}
+
+[data-style="minimal"] .string-btn:hover,
+[data-style="minimal"] .mic-btn:hover,
+[data-style="minimal"] .ref-btn:hover,
+[data-style="minimal"] .theme-toggle:hover,
+[data-style="minimal"] .style-toggle:hover {
+    transform: translateY(-2px);
+}
+
+[data-style="minimal"] .string-btn:active,
+[data-style="minimal"] .mic-btn:active,
+[data-style="minimal"] .ref-btn:active,
+[data-style="minimal"] .theme-toggle:active,
+[data-style="minimal"] .style-toggle:active {
+    transform: translateY(0);
+}
+
+[data-style="minimal"] .string-btn.active {
+    transform: translateY(0);
+}
+
+[data-style="minimal"] .note-display {
+    font-family: 'Inknut Antiqua', serif;
+    font-weight: 900;
+}
+
+[data-style="minimal"] .frequency,
+[data-style="minimal"] .cents {
+    font-family: 'Inknut Antiqua', serif;
+}
+
+[data-style="minimal"] .mic-btn,
+[data-style="minimal"] .ref-btn {
+    font-family: 'Inknut Antiqua', serif;
+    font-size: 0.65rem;
+    font-weight: 600;
+    border-radius: var(--radius);
+}
+
+[data-style="minimal"] .string-note {
+    font-family: 'Inknut Antiqua', serif;
+    font-weight: 900;
+}
+
+[data-style="minimal"] .string-number,
+[data-style="minimal"] .string-freq {
+    font-family: 'Inknut Antiqua', serif;
+}
+
+[data-style="minimal"] .string-btn::before {
+    border-radius: 0 0 var(--radius) var(--radius);
+}
+
+[data-style="minimal"] header {
+    border-bottom-width: 1px;
+}
+
+[data-style="minimal"] footer {
+    border-top-width: 1px;
+}
+
+[data-style="minimal"] .meter-indicator {
+    border-radius: 3px;
+}
+
+[data-style="minimal"] .tuner-display.in-tune {
+    box-shadow: 0 4px 16px rgba(5, 150, 105, 0.2);
+    border-color: var(--in-tune);
+}
+
+[data-style="minimal"] .style-toggle {
+    border-radius: var(--radius);
+}
+
+[data-style="minimal"] ::-webkit-scrollbar-track {
+    border-left-width: 1px;
+}
+
 /* === RESPONSIVE === */
 @media (max-width: 400px) {
     main {
