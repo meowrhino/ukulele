@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+  <!-- Agua Claro: gentle ink water, soft navy on pale blue, droplet circles -->
+  <rect width="48" height="48" fill="#eef2f8"/>
+  <rect x="1.5" y="1.5" width="45" height="45" fill="none" stroke="#6080a8" stroke-width="1.2"/>
+  <rect x="4" y="4" width="40" height="40" fill="none" stroke="#c0d0e0" stroke-width="0.6"/>
+  <!-- gentle wave curves on top/bottom -->
+  <path d="M10 2.5 Q14 4.5, 18 2.5 Q22 0.5, 26 2.5 Q30 4.5, 34 2.5 Q38 0.5, 42 2.5" fill="none" stroke="#6080a8" stroke-width="0.8" opacity="0.4"/>
+  <path d="M10 45.5 Q14 43.5, 18 45.5 Q22 47.5, 26 45.5 Q30 43.5, 34 45.5 Q38 47.5, 42 45.5" fill="none" stroke="#3a5a88" stroke-width="0.8" opacity="0.4"/>
+  <!-- droplet circles at corners -->
+  <circle cx="5" cy="5" r="3.5" fill="none" stroke="#2c4a7c" stroke-width="0.8" opacity="0.4"/>
+  <circle cx="5" cy="5" r="1.5" fill="#6080a8" opacity="0.3"/>
+  <circle cx="43" cy="5" r="3.5" fill="none" stroke="#2c4a7c" stroke-width="0.8" opacity="0.4"/>
+  <circle cx="43" cy="5" r="1.5" fill="#6080a8" opacity="0.3"/>
+  <circle cx="5" cy="43" r="3.5" fill="none" stroke="#3a5a88" stroke-width="0.8" opacity="0.4"/>
+  <circle cx="5" cy="43" r="1.5" fill="#3a5a88" opacity="0.3"/>
+  <circle cx="43" cy="43" r="3.5" fill="none" stroke="#3a5a88" stroke-width="0.8" opacity="0.4"/>
+  <circle cx="43" cy="43" r="1.5" fill="#3a5a88" opacity="0.3"/>
+  <!-- side ink dots -->
+  <circle cx="2" cy="18" r="0.7" fill="#2c4a7c" opacity="0.3"/>
+  <circle cx="2" cy="24" r="0.7" fill="#2c4a7c" opacity="0.3"/>
+  <circle cx="2" cy="30" r="0.7" fill="#2c4a7c" opacity="0.3"/>
+  <circle cx="46" cy="18" r="0.7" fill="#3a5a88" opacity="0.3"/>
+  <circle cx="46" cy="24" r="0.7" fill="#3a5a88" opacity="0.3"/>
+  <circle cx="46" cy="30" r="0.7" fill="#3a5a88" opacity="0.3"/>
+</svg>

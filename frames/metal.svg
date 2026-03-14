@@ -1,24 +1,19 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
-  <defs>
-    <linearGradient id="bg_m" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#0e0e12"/>
-      <stop offset="100%" stop-color="#1a1a22"/>
-    </linearGradient>
-    <linearGradient id="bd_m" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#d0d0d8"/>
-      <stop offset="50%" stop-color="#8888a0"/>
-      <stop offset="100%" stop-color="#d0d0d8"/>
-    </linearGradient>
-  </defs>
-  <rect width="48" height="48" fill="url(#bg_m)"/>
-  <rect x="1" y="1" width="46" height="46" fill="none" stroke="url(#bd_m)" stroke-width="1.5"/>
-  <rect x="3" y="3" width="42" height="42" fill="none" stroke="#555568" stroke-width="0.5"/>
-  <rect x="1" y="1" width="4" height="1.5" fill="#d0d0d8" opacity="0.6"/>
-  <rect x="43" y="1" width="4" height="1.5" fill="#d0d0d8" opacity="0.6"/>
-  <rect x="1" y="45.5" width="4" height="1.5" fill="#8888a0" opacity="0.6"/>
-  <rect x="43" y="45.5" width="4" height="1.5" fill="#8888a0" opacity="0.6"/>
-  <rect x="1" y="1" width="1.5" height="4" fill="#d0d0d8" opacity="0.6"/>
-  <rect x="45.5" y="1" width="1.5" height="4" fill="#d0d0d8" opacity="0.6"/>
-  <rect x="1" y="43" width="1.5" height="4" fill="#8888a0" opacity="0.6"/>
-  <rect x="45.5" y="43" width="1.5" height="4" fill="#8888a0" opacity="0.6"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" shape-rendering="crispEdges">
+  <!-- Metal Oscuro: industrial bevel, chrome on dark steel (bevel-retro inspired) -->
+  <rect width="48" height="48" fill="#18181e"/>
+  <!-- Outer bevel: bright top-left, dark bottom-right -->
+  <line x1="0" y1="0" x2="48" y2="0" stroke="#d8d8e4" stroke-width="2"/>
+  <line x1="0" y1="0" x2="0" y2="48" stroke="#d8d8e4" stroke-width="2"/>
+  <line x1="0" y1="47" x2="48" y2="47" stroke="#2a2a34" stroke-width="2"/>
+  <line x1="47" y1="0" x2="47" y2="48" stroke="#2a2a34" stroke-width="2"/>
+  <!-- Inner bevel -->
+  <line x1="3" y1="3" x2="45" y2="3" stroke="#b8b8c8" stroke-width="1"/>
+  <line x1="3" y1="3" x2="3" y2="45" stroke="#b8b8c8" stroke-width="1"/>
+  <line x1="3" y1="44" x2="45" y2="44" stroke="#40404a" stroke-width="1"/>
+  <line x1="44" y1="3" x2="44" y2="45" stroke="#40404a" stroke-width="1"/>
+  <!-- Rivet dots -->
+  <circle cx="2" cy="2" r="1.5" fill="#8888a0" opacity="0.6"/>
+  <circle cx="46" cy="2" r="1.5" fill="#8888a0" opacity="0.6"/>
+  <circle cx="2" cy="46" r="1.5" fill="#60607a" opacity="0.6"/>
+  <circle cx="46" cy="46" r="1.5" fill="#60607a" opacity="0.6"/>
 </svg>

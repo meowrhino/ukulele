@@ -1,26 +1,31 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+  <!-- Madera Oscuro: dense forest, teal-green (qīng), organic moss dots -->
   <defs>
     <linearGradient id="bg_w" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#120c06"/>
-      <stop offset="100%" stop-color="#1e150c"/>
+      <stop offset="0%" stop-color="#060e0b"/>
+      <stop offset="100%" stop-color="#0c1a14"/>
     </linearGradient>
     <linearGradient id="bd_w" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#d4a76a"/>
-      <stop offset="50%" stop-color="#c4956a"/>
-      <stop offset="100%" stop-color="#8b6540"/>
+      <stop offset="0%" stop-color="#55b898"/>
+      <stop offset="50%" stop-color="#2d8b6f"/>
+      <stop offset="100%" stop-color="#1e6b50"/>
     </linearGradient>
   </defs>
   <rect width="48" height="48" fill="url(#bg_w)"/>
   <rect x="1.5" y="1.5" width="45" height="45" fill="none" stroke="url(#bd_w)" stroke-width="2"/>
-  <rect x="4" y="4" width="40" height="40" fill="none" stroke="#6b4f30" stroke-width="0.8"/>
-  <circle cx="5" cy="5" r="2" fill="#d4a76a" opacity="0.4"/>
-  <circle cx="43" cy="5" r="2" fill="#c4956a" opacity="0.4"/>
-  <circle cx="5" cy="43" r="2" fill="#c4956a" opacity="0.4"/>
-  <circle cx="43" cy="43" r="2" fill="#d4a76a" opacity="0.4"/>
-  <line x1="14" y1="1.5" x2="14" y2="4" stroke="#d4a76a" stroke-width="0.5" opacity="0.5"/>
-  <line x1="24" y1="1.5" x2="24" y2="4" stroke="#d4a76a" stroke-width="0.5" opacity="0.5"/>
-  <line x1="34" y1="1.5" x2="34" y2="4" stroke="#d4a76a" stroke-width="0.5" opacity="0.5"/>
-  <line x1="14" y1="44" x2="14" y2="46.5" stroke="#8b6540" stroke-width="0.5" opacity="0.5"/>
-  <line x1="24" y1="44" x2="24" y2="46.5" stroke="#8b6540" stroke-width="0.5" opacity="0.5"/>
-  <line x1="34" y1="44" x2="34" y2="46.5" stroke="#8b6540" stroke-width="0.5" opacity="0.5"/>
+  <rect x="4" y="4" width="40" height="40" fill="none" stroke="#1a5040" stroke-width="0.8"/>
+  <!-- organic L-bracket corners -->
+  <path d="M1 10 V1 H10" fill="none" stroke="#a0d8c0" stroke-width="2" stroke-linecap="round"/>
+  <path d="M38 1 H47 V10" fill="none" stroke="#55b898" stroke-width="2" stroke-linecap="round"/>
+  <path d="M1 38 V47 H10" fill="none" stroke="#55b898" stroke-width="2" stroke-linecap="round"/>
+  <path d="M38 47 H47 V38" fill="none" stroke="#a0d8c0" stroke-width="2" stroke-linecap="round"/>
+  <!-- moss dots along edges -->
+  <circle cx="16" cy="2" r="0.8" fill="#a0d8c0" opacity="0.5"/>
+  <circle cx="22" cy="2.5" r="0.6" fill="#55b898" opacity="0.4"/>
+  <circle cx="28" cy="2" r="0.8" fill="#a0d8c0" opacity="0.5"/>
+  <circle cx="34" cy="2.5" r="0.6" fill="#55b898" opacity="0.4"/>
+  <circle cx="16" cy="46" r="0.8" fill="#2d8b6f" opacity="0.5"/>
+  <circle cx="22" cy="45.5" r="0.6" fill="#1e6b50" opacity="0.4"/>
+  <circle cx="28" cy="46" r="0.8" fill="#2d8b6f" opacity="0.5"/>
+  <circle cx="34" cy="45.5" r="0.6" fill="#1e6b50" opacity="0.4"/>
 </svg>

@@ -4,89 +4,94 @@
    ELEMENT MODES — define color palettes
    ============================================ */
 
+/* Wu Xing: 火 Fire = RED (vermillion) — Most Yang */
 [data-mode="fuego"] {
-    --accent: #ff8b3a;
-    --accent-dim: #8d4b1f;
-    --accent-glow: rgba(255,139,58,0.25);
-    --bg-light: #fef3e2;
-    --bg-dark: #160a04;
-    --text-light: #3d1c00;
-    --text-dark: #ffe5a8;
-    --border-light: #e8a060;
-    --border-dark: #ff8b3a;
-    --g-color: #ffd48b;
-    --c-color: #ff8b3a;
-    --e-color: #ffb15d;
-    --a-color: #ffe5a8;
-    --in-tune: #ff8b3a;
+    --accent: #c83c23;
+    --accent-dim: #6b1e12;
+    --accent-glow: rgba(200,60,35,0.3);
+    --bg-light: #fef0ee;
+    --bg-dark: #1a0604;
+    --text-light: #3d0f0a;
+    --text-dark: #ffc4b5;
+    --border-light: #d06850;
+    --border-dark: #c83c23;
+    --g-color: #ff8866;
+    --c-color: #c83c23;
+    --e-color: #e85540;
+    --a-color: #ffc4b5;
+    --in-tune: #e85540;
 }
 
+/* Wu Xing: 土 Earth = YELLOW/GOLD — Center/Balance */
 [data-mode="tierra"] {
-    --accent: #88b977;
-    --accent-dim: #40613a;
-    --accent-glow: rgba(136,185,119,0.25);
-    --bg-light: #f0f7ec;
-    --bg-dark: #0b1209;
-    --text-light: #1a2e15;
-    --text-dark: #dff4c8;
-    --border-light: #88b977;
-    --border-dark: #88b977;
-    --g-color: #b6d69a;
-    --c-color: #88b977;
-    --e-color: #5f8a52;
-    --a-color: #dff4c8;
-    --in-tune: #88b977;
+    --accent: #d4a017;
+    --accent-dim: #7a5c0e;
+    --accent-glow: rgba(212,160,23,0.3);
+    --bg-light: #fdf6e3;
+    --bg-dark: #14100a;
+    --text-light: #3d2800;
+    --text-dark: #f0d888;
+    --border-light: #c49520;
+    --border-dark: #d4a017;
+    --g-color: #e8c44a;
+    --c-color: #d4a017;
+    --e-color: #a07830;
+    --a-color: #f0d888;
+    --in-tune: #d4a017;
 }
 
+/* Wu Xing: 金 Metal = WHITE/SILVER — Lesser Yin */
 [data-mode="metal"] {
-    --accent: #a0a0b8;
-    --accent-dim: #555568;
-    --accent-glow: rgba(160,160,184,0.2);
-    --bg-light: #f0f0f4;
-    --bg-dark: #0e0e12;
-    --text-light: #2a2a30;
-    --text-dark: #d0d0d8;
+    --accent: #b8b8c8;
+    --accent-dim: #60607a;
+    --accent-glow: rgba(184,184,200,0.2);
+    --bg-light: #f4f4f8;
+    --bg-dark: #08080c;
+    --text-light: #1a1a24;
+    --text-dark: #d8d8e4;
     --border-light: #a0a0b0;
-    --border-dark: #a0a0b8;
+    --border-dark: #b8b8c8;
     --g-color: #d0d0d8;
-    --c-color: #a0a0b8;
-    --e-color: #8080a0;
-    --a-color: #e0e0e8;
-    --in-tune: #a0a0b8;
+    --c-color: #b8b8c8;
+    --e-color: #8888a0;
+    --a-color: #e4e4ec;
+    --in-tune: #b8b8c8;
 }
 
+/* Wu Xing: 水 Water = BLACK/INK — Most Yin */
 [data-mode="agua"] {
-    --accent: #4ac8cc;
-    --accent-dim: #1a4045;
-    --accent-glow: rgba(74,200,204,0.25);
-    --bg-light: #eaf8f9;
-    --bg-dark: #030a0e;
-    --text-light: #0a2e30;
-    --text-dark: #88e8ee;
-    --border-light: #4ac8cc;
-    --border-dark: #4ac8cc;
-    --g-color: #88e8ee;
-    --c-color: #4ac8cc;
-    --e-color: #3a98a0;
-    --a-color: #b0f0f4;
-    --in-tune: #4ac8cc;
+    --accent: #2c4a7c;
+    --accent-dim: #182840;
+    --accent-glow: rgba(44,74,124,0.3);
+    --bg-light: #eef2f8;
+    --bg-dark: #06080e;
+    --text-light: #0a1628;
+    --text-dark: #8aa0c4;
+    --border-light: #6080a8;
+    --border-dark: #3a5a88;
+    --g-color: #6888b0;
+    --c-color: #2c4a7c;
+    --e-color: #1e3460;
+    --a-color: #8aa0c4;
+    --in-tune: #4a6ea0;
 }
 
+/* Wu Xing: 木 Wood = GREEN/TEAL (青 qīng) — Lesser Yang */
 [data-mode="madera"] {
-    --accent: #c4956a;
-    --accent-dim: #6b4f30;
-    --accent-glow: rgba(196,149,106,0.25);
-    --bg-light: #faf5ef;
-    --bg-dark: #120c06;
-    --text-light: #3d2a15;
-    --text-dark: #e8d5b7;
-    --border-light: #c4956a;
-    --border-dark: #c4956a;
-    --g-color: #d4a76a;
-    --c-color: #c4956a;
-    --e-color: #8b6540;
-    --a-color: #e8d5b7;
-    --in-tune: #c4956a;
+    --accent: #2d8b6f;
+    --accent-dim: #1a5040;
+    --accent-glow: rgba(45,139,111,0.25);
+    --bg-light: #eef6f2;
+    --bg-dark: #060e0b;
+    --text-light: #0a2e20;
+    --text-dark: #a0d8c0;
+    --border-light: #2d8b6f;
+    --border-dark: #2d8b6f;
+    --g-color: #55b898;
+    --c-color: #2d8b6f;
+    --e-color: #1e6b50;
+    --a-color: #a0d8c0;
+    --in-tune: #2d8b6f;
 }
 
 /* ============================================
@@ -176,7 +181,7 @@
     background: repeating-linear-gradient(
         0deg,
         transparent 0px,
-        rgba(255,100,0,0.02) 2px,
+        rgba(200,60,35,0.03) 2px,
         transparent 4px
     );
     pointer-events: none;
@@ -230,8 +235,8 @@
 [data-mode="tierra"] .tuner-display {
     border-radius: 24px;
     background:
-        radial-gradient(circle at 30% 80%, rgba(136,185,119,0.08) 0%, transparent 50%),
-        radial-gradient(circle at 70% 20%, rgba(136,185,119,0.05) 0%, transparent 50%),
+        radial-gradient(circle at 30% 80%, rgba(212,160,23,0.08) 0%, transparent 50%),
+        radial-gradient(circle at 70% 20%, rgba(212,160,23,0.05) 0%, transparent 50%),
         var(--bg);
     box-shadow: var(--shadow), inset 0 2px 8px rgba(0,0,0,0.04);
     position: relative;
@@ -360,9 +365,9 @@
     background:
         linear-gradient(
             135deg,
-            rgba(74,200,204,0.06) 0%,
+            rgba(44,74,124,0.08) 0%,
             transparent 40%,
-            rgba(74,200,204,0.04) 70%,
+            rgba(44,74,124,0.05) 70%,
             transparent 100%
         ),
         var(--bg);
@@ -375,7 +380,7 @@
     position: absolute;
     top: -50%; left: -50%;
     width: 200%; height: 200%;
-    background: radial-gradient(ellipse at center, rgba(74,200,204,0.05) 0%, transparent 60%);
+    background: radial-gradient(ellipse at center, rgba(44,74,124,0.06) 0%, transparent 60%);
     animation: agua-drift 8s ease-in-out infinite;
     pointer-events: none;
 }
@@ -428,14 +433,14 @@
         repeating-linear-gradient(
             2deg,
             transparent 0px,
-            rgba(196,149,106,0.04) 2px,
+            rgba(45,139,111,0.04) 2px,
             transparent 3px,
             transparent 12px
         ),
         repeating-linear-gradient(
             178deg,
             transparent 0px,
-            rgba(139,101,64,0.03) 1px,
+            rgba(30,107,80,0.03) 1px,
             transparent 2px,
             transparent 18px
         ),
@@ -522,15 +527,27 @@ main {
     transition: all 0.5s ease;
 }
 
-/* 9-slice frames ONLY in oscuro */
-[data-theme="oscuro"] .tuner-display {
+/* 9-slice frames in OSCURO (yang) and CLARO (yin) — playful, textured */
+/* Brutal + Minimal stay CLEAN — no frames, just design */
+
+[data-theme="oscuro"] .tuner-display,
+[data-theme="claro"] .tuner-display {
     border: 16px solid transparent;
 }
+
+/* Oscuro frames (dark, yang, dramatic) */
 [data-theme="oscuro"][data-mode="fuego"] .tuner-display  { border-image: url('./frames/fuego.svg') 16 / 16px / 0 stretch; }
 [data-theme="oscuro"][data-mode="tierra"] .tuner-display  { border-image: url('./frames/tierra.svg') 16 / 16px / 0 stretch; }
 [data-theme="oscuro"][data-mode="metal"] .tuner-display   { border-image: url('./frames/metal.svg') 16 / 16px / 0 stretch; }
 [data-theme="oscuro"][data-mode="agua"] .tuner-display    { border-image: url('./frames/agua.svg') 16 / 16px / 0 stretch; }
 [data-theme="oscuro"][data-mode="madera"] .tuner-display  { border-image: url('./frames/madera.svg') 16 / 16px / 0 stretch; }
+
+/* Claro frames (light, yin, playful) */
+[data-theme="claro"][data-mode="fuego"] .tuner-display   { border-image: url('./frames/fuego-claro.svg') 16 / 16px / 0 stretch; }
+[data-theme="claro"][data-mode="tierra"] .tuner-display   { border-image: url('./frames/tierra-claro.svg') 16 / 16px / 0 stretch; }
+[data-theme="claro"][data-mode="metal"] .tuner-display    { border-image: url('./frames/metal-claro.svg') 16 / 16px / 0 stretch; }
+[data-theme="claro"][data-mode="agua"] .tuner-display     { border-image: url('./frames/agua-claro.svg') 16 / 16px / 0 stretch; }
+[data-theme="claro"][data-mode="madera"] .tuner-display   { border-image: url('./frames/madera-claro.svg') 16 / 16px / 0 stretch; }
 
 .note-display {
     font-family: var(--font-head);
@@ -732,11 +749,11 @@ main {
 .mode-btn.active, .theme-btn.active { border-color: var(--text); background: rgba(128,128,128,0.08); }
 
 .mode-swatch, .theme-swatch { width: 28px; height: 28px; border-radius: 4px; display: block; }
-.mode-swatch-fuego  { background: linear-gradient(135deg, #241106, #5c2d0f); border: 1px solid #ff8b3a; }
-.mode-swatch-tierra { background: linear-gradient(135deg, #0d160b, #1e3720); border: 1px solid #88b977; }
-.mode-swatch-metal  { background: linear-gradient(135deg, #0e0e12, #1a1a22); border: 1px solid #a0a0b8; }
-.mode-swatch-agua   { background: linear-gradient(135deg, #040e12, #081820); border: 1px solid #4ac8cc; }
-.mode-swatch-madera { background: linear-gradient(135deg, #120c06, #1e150c); border: 1px solid #c4956a; }
+.mode-swatch-fuego  { background: linear-gradient(135deg, #1a0604, #3a0c08); border: 1px solid #c83c23; }
+.mode-swatch-tierra { background: linear-gradient(135deg, #14100a, #2a1e0c); border: 1px solid #d4a017; }
+.mode-swatch-metal  { background: linear-gradient(135deg, #08080c, #1a1a22); border: 1px solid #b8b8c8; }
+.mode-swatch-agua   { background: linear-gradient(135deg, #06080e, #0c1628); border: 1px solid #2c4a7c; }
+.mode-swatch-madera { background: linear-gradient(135deg, #060e0b, #0c1a14); border: 1px solid #2d8b6f; }
 
 .theme-swatch-brutal  { background: #fffce8; border: 3px solid #1a1a1a; }
 .theme-swatch-minimal { background: #fff; border: 1px solid #ccc; border-radius: 8px; }

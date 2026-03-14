@@ -1,25 +1,33 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+  <!-- Tierra Oscuro: golden crystal temple, rich gold on dark ochre -->
   <defs>
-    <linearGradient id="bg_t" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#0d160b"/>
-      <stop offset="100%" stop-color="#1e3720"/>
+    <linearGradient id="bg_t" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#14100a"/>
+      <stop offset="100%" stop-color="#1e1508"/>
     </linearGradient>
     <linearGradient id="bd_t" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#b6d69a"/>
-      <stop offset="100%" stop-color="#5f8a52"/>
+      <stop offset="0%" stop-color="#e8c44a"/>
+      <stop offset="50%" stop-color="#f0d888"/>
+      <stop offset="100%" stop-color="#a07830"/>
     </linearGradient>
   </defs>
   <rect width="48" height="48" fill="url(#bg_t)"/>
-  <rect x="1.5" y="1.5" width="45" height="45" fill="none" stroke="url(#bd_t)" stroke-width="2"/>
-  <rect x="4.5" y="4.5" width="39" height="39" fill="none" stroke="#40613a" stroke-width="1"/>
-  <circle cx="18" cy="2.5" r="0.9" fill="#dff4c8"/>
-  <circle cx="24" cy="2.5" r="0.9" fill="#dff4c8"/>
-  <circle cx="30" cy="2.5" r="0.9" fill="#dff4c8"/>
-  <circle cx="18" cy="45.5" r="0.9" fill="#88b977"/>
-  <circle cx="24" cy="45.5" r="0.9" fill="#88b977"/>
-  <circle cx="30" cy="45.5" r="0.9" fill="#88b977"/>
-  <path d="M1 10 V1 H10" fill="none" stroke="#dff4c8" stroke-width="2"/>
-  <path d="M38 1 H47 V10" fill="none" stroke="#88b977" stroke-width="2"/>
-  <path d="M1 38 V47 H10" fill="none" stroke="#88b977" stroke-width="2"/>
-  <path d="M38 47 H47 V38" fill="none" stroke="#dff4c8" stroke-width="2"/>
+  <rect x="1" y="1" width="46" height="46" fill="none" stroke="url(#bd_t)" stroke-width="1.5"/>
+  <rect x="4" y="4" width="40" height="40" fill="none" stroke="#5a4a20" stroke-width="0.5"/>
+  <!-- golden corner diamonds -->
+  <rect x="0.5" y="0.5" width="6" height="6" fill="#e8c44a" opacity="0.5"/>
+  <rect x="41.5" y="0.5" width="6" height="6" fill="#e8c44a" opacity="0.5"/>
+  <rect x="0.5" y="41.5" width="6" height="6" fill="#a07830" opacity="0.5"/>
+  <rect x="41.5" y="41.5" width="6" height="6" fill="#a07830" opacity="0.5"/>
+  <rect x="2" y="2" width="3" height="3" fill="#f0d888" opacity="0.6" transform="rotate(45 3.5 3.5)"/>
+  <rect x="43" y="2" width="3" height="3" fill="#f0d888" opacity="0.6" transform="rotate(45 44.5 3.5)"/>
+  <rect x="2" y="43" width="3" height="3" fill="#d4a017" opacity="0.6" transform="rotate(45 3.5 44.5)"/>
+  <rect x="43" y="43" width="3" height="3" fill="#d4a017" opacity="0.6" transform="rotate(45 44.5 44.5)"/>
+  <!-- edge dots -->
+  <circle cx="16" cy="2" r="0.7" fill="#f0d888" opacity="0.5"/>
+  <circle cx="24" cy="2" r="0.7" fill="#f0d888" opacity="0.5"/>
+  <circle cx="32" cy="2" r="0.7" fill="#f0d888" opacity="0.5"/>
+  <circle cx="16" cy="46" r="0.7" fill="#a07830" opacity="0.5"/>
+  <circle cx="24" cy="46" r="0.7" fill="#a07830" opacity="0.5"/>
+  <circle cx="32" cy="46" r="0.7" fill="#a07830" opacity="0.5"/>
 </svg>

@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" shape-rendering="crispEdges">
+  <!-- Metal Claro: light chrome bevel, clean and precise -->
+  <rect width="48" height="48" fill="#f4f4f8"/>
+  <!-- Outer bevel: bright top-left, shadow bottom-right -->
+  <line x1="0" y1="0" x2="48" y2="0" stroke="#ffffff" stroke-width="2"/>
+  <line x1="0" y1="0" x2="0" y2="48" stroke="#ffffff" stroke-width="2"/>
+  <line x1="0" y1="47" x2="48" y2="47" stroke="#c0c0cc" stroke-width="2"/>
+  <line x1="47" y1="0" x2="47" y2="48" stroke="#c0c0cc" stroke-width="2"/>
+  <!-- Inner bevel -->
+  <line x1="3" y1="3" x2="45" y2="3" stroke="#e8e8f0" stroke-width="1"/>
+  <line x1="3" y1="3" x2="3" y2="45" stroke="#e8e8f0" stroke-width="1"/>
+  <line x1="3" y1="44" x2="45" y2="44" stroke="#a0a0b0" stroke-width="1"/>
+  <line x1="44" y1="3" x2="44" y2="45" stroke="#a0a0b0" stroke-width="1"/>
+  <!-- Precise corner brackets -->
+  <rect x="1" y="1" width="4" height="1" fill="#b8b8c8" opacity="0.4"/>
+  <rect x="1" y="1" width="1" height="4" fill="#b8b8c8" opacity="0.4"/>
+  <rect x="43" y="1" width="4" height="1" fill="#b8b8c8" opacity="0.4"/>
+  <rect x="46" y="1" width="1" height="4" fill="#b8b8c8" opacity="0.4"/>
+  <rect x="1" y="46" width="4" height="1" fill="#8888a0" opacity="0.4"/>
+  <rect x="1" y="43" width="1" height="4" fill="#8888a0" opacity="0.4"/>
+  <rect x="43" y="46" width="4" height="1" fill="#8888a0" opacity="0.4"/>
+  <rect x="46" y="43" width="1" height="4" fill="#8888a0" opacity="0.4"/>
+</svg>

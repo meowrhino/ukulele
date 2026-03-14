@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+  <!-- Tierra Claro: warm golden cream, sun circles, playful dots -->
+  <rect width="48" height="48" fill="#fdf6e3"/>
+  <rect x="1.5" y="1.5" width="45" height="45" fill="none" stroke="#d4a017" stroke-width="1.5"/>
+  <rect x="4" y="4" width="40" height="40" fill="none" stroke="#f0d888" stroke-width="0.8"/>
+  <!-- sun circles at corners -->
+  <circle cx="5" cy="5" r="4" fill="none" stroke="#d4a017" stroke-width="1.2" opacity="0.6"/>
+  <circle cx="5" cy="5" r="1.5" fill="#e8c44a" opacity="0.5"/>
+  <circle cx="43" cy="5" r="4" fill="none" stroke="#d4a017" stroke-width="1.2" opacity="0.6"/>
+  <circle cx="43" cy="5" r="1.5" fill="#e8c44a" opacity="0.5"/>
+  <circle cx="5" cy="43" r="4" fill="none" stroke="#a07830" stroke-width="1.2" opacity="0.6"/>
+  <circle cx="5" cy="43" r="1.5" fill="#d4a017" opacity="0.5"/>
+  <circle cx="43" cy="43" r="4" fill="none" stroke="#a07830" stroke-width="1.2" opacity="0.6"/>
+  <circle cx="43" cy="43" r="1.5" fill="#d4a017" opacity="0.5"/>
+  <!-- dotted border accents -->
+  <circle cx="14" cy="1.5" r="0.8" fill="#d4a017" opacity="0.4"/>
+  <circle cx="20" cy="1.5" r="0.8" fill="#d4a017" opacity="0.4"/>
+  <circle cx="26" cy="1.5" r="0.8" fill="#d4a017" opacity="0.4"/>
+  <circle cx="32" cy="1.5" r="0.8" fill="#d4a017" opacity="0.4"/>
+  <circle cx="14" cy="46.5" r="0.8" fill="#a07830" opacity="0.4"/>
+  <circle cx="20" cy="46.5" r="0.8" fill="#a07830" opacity="0.4"/>
+  <circle cx="26" cy="46.5" r="0.8" fill="#a07830" opacity="0.4"/>
+  <circle cx="32" cy="46.5" r="0.8" fill="#a07830" opacity="0.4"/>
+</svg>
