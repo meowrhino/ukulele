@@ -7,21 +7,16 @@ const STRINGS = {
     A4: { note: 'A', octave: 4, freq: 440.00, string: 1 },
 };
 
-// all chromatic notes for auto-detect mode
 const ALL_NOTES = [
-    { note: 'C',  freq: 261.63 },
-    { note: 'C#', freq: 277.18 },
-    { note: 'D',  freq: 293.66 },
-    { note: 'D#', freq: 311.13 },
-    { note: 'E',  freq: 329.63 },
-    { note: 'F',  freq: 349.23 },
-    { note: 'F#', freq: 369.99 },
-    { note: 'G',  freq: 392.00 },
-    { note: 'G#', freq: 415.30 },
-    { note: 'A',  freq: 440.00 },
-    { note: 'A#', freq: 466.16 },
-    { note: 'B',  freq: 493.88 },
+    { note: 'C', freq: 261.63 }, { note: 'C#', freq: 277.18 },
+    { note: 'D', freq: 293.66 }, { note: 'D#', freq: 311.13 },
+    { note: 'E', freq: 329.63 }, { note: 'F', freq: 349.23 },
+    { note: 'F#', freq: 369.99 }, { note: 'G', freq: 392.00 },
+    { note: 'G#', freq: 415.30 }, { note: 'A', freq: 440.00 },
+    { note: 'A#', freq: 466.16 }, { note: 'B', freq: 493.88 },
 ];
+
+const ELEMENT_MODES = ['fuego', 'agua', 'tierra', 'aire', 'eter'];
 
 // state
 let audioCtx = null;
@@ -41,15 +36,57 @@ const centsDisplay = document.getElementById('centsDisplay');
 const tuningStatus = document.getElementById('tuningStatus');
 const micBtn = document.getElementById('micBtn');
 const refBtn = document.getElementById('refBtn');
+const tunerDisplay = document.getElementById('tunerDisplay');
+const settingsBtn = document.getElementById('settingsBtn');
+const modalOverlay = document.getElementById('modalOverlay');
+const modalClose = document.getElementById('modalClose');
 const themeToggle = document.getElementById('themeToggle');
+const themeIcon = document.getElementById('themeIcon');
+const themeRow = document.getElementById('themeRow');
+const modeBtns = document.querySelectorAll('.mode-btn');
 const stringBtns = document.querySelectorAll('.string-btn');
-const tunerDisplay = document.querySelector('.tuner-display');
+
+// === MODE SYSTEM ===
+function initMode() {
+    const saved = localStorage.getItem('meowrhino-ukulele-mode') || 'brutal';
+    setMode(saved);
+}
+
+function setMode(mode) {
+    document.documentElement.setAttribute('data-mode', mode);
+    localStorage.setItem('meowrhino-ukulele-mode', mode);
+
+    // element modes force dark
+    if (ELEMENT_MODES.includes(mode)) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        themeRow.classList.add('hidden');
+    } else {
+        themeRow.classList.remove('hidden');
+        const savedTheme = localStorage.getItem('meowrhino-ukulele-theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+    }
+
+    updateModeButtons();
+    updateThemeIcon();
+}
+
+function updateModeButtons() {
+    const current = document.documentElement.getAttribute('data-mode');
+    modeBtns.forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.mode === current);
+    });
+}
+
+modeBtns.forEach(btn => {
+    btn.addEventListener('click', () => setMode(btn.dataset.mode));
+});
 
 // === THEME ===
 function initTheme() {
-    const saved = localStorage.getItem('meowrhino-ukulele-theme');
-    if (saved) {
-        document.documentElement.setAttribute('data-theme', saved);
+    const savedTheme = localStorage.getItem('meowrhino-ukulele-theme') || 'light';
+    const mode = document.documentElement.getAttribute('data-mode');
+    if (!ELEMENT_MODES.includes(mode)) {
+        document.documentElement.setAttribute('data-theme', savedTheme);
     }
     updateThemeIcon();
 }
@@ -64,44 +101,33 @@ function toggleTheme() {
 
 function updateThemeIcon() {
     const theme = document.documentElement.getAttribute('data-theme');
-    document.querySelector('.theme-icon').textContent = theme === 'dark' ? '◑' : '◐';
+    themeIcon.textContent = theme === 'dark' ? '◑' : '◐';
 }
 
 themeToggle.addEventListener('click', toggleTheme);
-initTheme();
 
-// === STYLE TOGGLE (brutal / minimal) ===
-const styleToggle = document.getElementById('styleToggle');
-const styleLabel = document.getElementById('styleLabel');
+// === MODAL ===
+settingsBtn.addEventListener('click', () => {
+    modalOverlay.classList.add('open');
+});
 
-function initStyle() {
-    const saved = localStorage.getItem('meowrhino-ukulele-style') || 'brutal';
-    document.documentElement.setAttribute('data-style', saved);
-    updateStyleLabel();
-}
+modalClose.addEventListener('click', () => {
+    modalOverlay.classList.remove('open');
+});
 
-function toggleStyle() {
-    const current = document.documentElement.getAttribute('data-style');
-    const next = current === 'minimal' ? 'brutal' : 'minimal';
-    document.documentElement.setAttribute('data-style', next);
-    localStorage.setItem('meowrhino-ukulele-style', next);
-    updateStyleLabel();
-}
+modalOverlay.addEventListener('click', (e) => {
+    if (e.target === modalOverlay) modalOverlay.classList.remove('open');
+});
 
-function updateStyleLabel() {
-    const style = document.documentElement.getAttribute('data-style');
-    styleLabel.textContent = style === 'minimal' ? 'minimal' : 'brutal';
-}
-
-styleToggle.addEventListener('click', toggleStyle);
-initStyle();
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') modalOverlay.classList.remove('open');
+});
 
 // === STRING SELECTION ===
 stringBtns.forEach(btn => {
     btn.addEventListener('click', () => {
         const noteKey = btn.dataset.note;
 
-        // toggle off if already selected
         if (selectedString === noteKey) {
             selectedString = null;
             btn.classList.remove('active');
@@ -109,16 +135,14 @@ stringBtns.forEach(btn => {
             return;
         }
 
-        // deselect others
         stringBtns.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         selectedString = noteKey;
 
-        // update display to target
         const target = STRINGS[noteKey];
         noteDisplay.textContent = target.note;
         noteDisplay.style.color = '';
-        tuningStatus.textContent = `Afinando cuerda ${target.string} — ${target.note}${target.octave}`;
+        tuningStatus.textContent = `cuerda ${target.string} — ${target.note}${target.octave}`;
         tuningStatus.classList.remove('in-tune');
     });
 });
@@ -127,91 +151,64 @@ stringBtns.forEach(btn => {
 micBtn.addEventListener('click', toggleMic);
 
 async function toggleMic() {
-    if (isListening) {
-        stopListening();
-    } else {
-        await startListening();
-    }
+    if (isListening) stopListening();
+    else await startListening();
 }
 
 async function startListening() {
     try {
         audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         micStream = await navigator.mediaDevices.getUserMedia({ audio: true });
-
         const source = audioCtx.createMediaStreamSource(micStream);
         analyser = audioCtx.createAnalyser();
         analyser.fftSize = 4096;
         source.connect(analyser);
-
         isListening = true;
         micBtn.classList.add('active');
-        micBtn.querySelector('.mic-text').textContent = 'Micrófono activo';
+        micBtn.querySelector('.mic-text').textContent = 'escuchando';
         tuningStatus.textContent = selectedString
-            ? `Escuchando — cuerda ${STRINGS[selectedString].string}`
-            : 'Escuchando — modo libre';
-
+            ? `escuchando — cuerda ${STRINGS[selectedString].string}`
+            : 'escuchando — modo libre';
         detect();
     } catch (err) {
-        tuningStatus.textContent = 'Error: no se pudo acceder al micrófono';
-        console.error('Mic error:', err);
+        tuningStatus.textContent = 'error: micrófono no disponible';
     }
 }
 
 function stopListening() {
     isListening = false;
     if (animFrame) cancelAnimationFrame(animFrame);
-    if (micStream) {
-        micStream.getTracks().forEach(t => t.stop());
-        micStream = null;
-    }
-    if (audioCtx) {
-        audioCtx.close();
-        audioCtx = null;
-    }
+    if (micStream) { micStream.getTracks().forEach(t => t.stop()); micStream = null; }
+    if (audioCtx) { audioCtx.close(); audioCtx = null; }
     micBtn.classList.remove('active');
-    micBtn.querySelector('.mic-text').textContent = 'Activar micrófono';
+    micBtn.querySelector('.mic-text').textContent = 'micrófono';
     tunerDisplay.classList.remove('in-tune');
     if (!selectedString) resetDisplay();
 }
 
-// === PITCH DETECTION (autocorrelation) ===
+// === PITCH DETECTION ===
 function detect() {
     if (!isListening) return;
-
     const bufLen = analyser.fftSize;
     const buf = new Float32Array(bufLen);
     analyser.getFloatTimeDomainData(buf);
 
-    // check if there's signal
     let rms = 0;
     for (let i = 0; i < bufLen; i++) rms += buf[i] * buf[i];
     rms = Math.sqrt(rms / bufLen);
 
-    if (rms < 0.01) {
-        // too quiet
-        animFrame = requestAnimationFrame(detect);
-        return;
-    }
+    if (rms < 0.01) { animFrame = requestAnimationFrame(detect); return; }
 
     const pitch = autoCorrelate(buf, audioCtx.sampleRate);
-
-    if (pitch > 0) {
-        updateTuner(pitch);
-    }
-
+    if (pitch > 0) updateTuner(pitch);
     animFrame = requestAnimationFrame(detect);
 }
 
 function autoCorrelate(buf, sampleRate) {
     const SIZE = buf.length;
     const MAX_SAMPLES = Math.floor(SIZE / 2);
-    let bestOffset = -1;
-    let bestCorrelation = 0;
-    let foundGoodCorrelation = false;
+    let bestOffset = -1, bestCorrelation = 0, foundGoodCorrelation = false;
     const correlations = new Float32Array(MAX_SAMPLES);
-
-    // find the first point where the signal crosses zero (positive to negative)
     let lastCorrelation = 1;
 
     for (let offset = 0; offset < MAX_SAMPLES; offset++) {
@@ -229,96 +226,71 @@ function autoCorrelate(buf, sampleRate) {
                 bestOffset = offset;
             }
         } else if (foundGoodCorrelation) {
-            // past the peak, interpolate
-            const shift = (correlations[bestOffset + 1] - correlations[bestOffset - 1]) /
-                correlations[bestOffset];
+            const shift = (correlations[bestOffset + 1] - correlations[bestOffset - 1]) / correlations[bestOffset];
             return sampleRate / (bestOffset + 8 * shift);
         }
-
         lastCorrelation = correlation;
     }
 
-    if (bestCorrelation > 0.01) {
-        return sampleRate / bestOffset;
-    }
-
+    if (bestCorrelation > 0.01) return sampleRate / bestOffset;
     return -1;
 }
 
-// === UPDATE TUNER DISPLAY ===
+// === UPDATE TUNER ===
 function updateTuner(detectedFreq) {
     let targetFreq, targetNote;
-
     if (selectedString) {
-        // locked to specific string
         targetFreq = STRINGS[selectedString].freq;
         targetNote = STRINGS[selectedString].note;
     } else {
-        // free mode — find closest note across octaves
         const closest = findClosestNote(detectedFreq);
         targetFreq = closest.freq;
         targetNote = closest.note;
     }
 
     const cents = getCents(detectedFreq, targetFreq);
-
-    // update note display
     noteDisplay.textContent = targetNote;
     freqDisplay.textContent = `${detectedFreq.toFixed(1)} Hz`;
 
-    // update meter (cents range: -50 to +50)
     const clampedCents = Math.max(-50, Math.min(50, cents));
     const pct = ((clampedCents + 50) / 100) * 100;
     meterIndicator.style.left = `${pct}%`;
 
-    // update cents display
     const sign = cents >= 0 ? '+' : '';
     centsDisplay.textContent = `${sign}${cents.toFixed(0)} cents`;
 
-    // classify tuning accuracy
     const absCents = Math.abs(cents);
     meterIndicator.className = 'meter-indicator';
     tunerDisplay.classList.remove('in-tune');
     tuningStatus.classList.remove('in-tune');
 
     if (absCents <= 3) {
-        // in tune!
         meterIndicator.classList.add('in-tune');
         noteDisplay.style.color = 'var(--in-tune)';
         tunerDisplay.classList.add('in-tune');
-        tuningStatus.textContent = '¡Afinado!';
+        tuningStatus.textContent = 'afinado';
         tuningStatus.classList.add('in-tune');
     } else if (absCents <= 15) {
         meterIndicator.classList.add('close');
         noteDisplay.style.color = 'var(--close)';
-        tuningStatus.textContent = cents > 0 ? 'Un poco alto ♯' : 'Un poco bajo ♭';
-        tuningStatus.classList.remove('in-tune');
+        tuningStatus.textContent = cents > 0 ? 'un poco alto ♯' : 'un poco bajo ♭';
     } else {
         meterIndicator.classList.add('out-tune');
         noteDisplay.style.color = 'var(--out-tune)';
-        tuningStatus.textContent = cents > 0 ? 'Muy alto ♯ — afloja' : 'Muy bajo ♭ — aprieta';
-        tuningStatus.classList.remove('in-tune');
+        tuningStatus.textContent = cents > 0 ? 'muy alto ♯' : 'muy bajo ♭';
     }
 }
 
 function findClosestNote(freq) {
-    // find the octave
-    let minDist = Infinity;
-    let closest = ALL_NOTES[0];
-
-    // check octaves 2-6
+    let minDist = Infinity, closest = ALL_NOTES[0];
     for (let oct = 2; oct <= 6; oct++) {
-        const octMultiplier = Math.pow(2, oct - 4); // relative to octave 4
+        const mult = Math.pow(2, oct - 4);
         for (const n of ALL_NOTES) {
-            const noteFreq = n.freq * octMultiplier;
+            const noteFreq = n.freq * mult;
             const dist = Math.abs(getCents(freq, noteFreq));
-            if (dist < minDist) {
-                minDist = dist;
-                closest = { note: n.note, freq: noteFreq };
-            }
+            if (dist < minDist) { minDist = dist; closest = { note: n.note, freq: noteFreq }; }
         }
     }
-
     return closest;
 }
 
@@ -330,53 +302,39 @@ function getCents(freq, refFreq) {
 refBtn.addEventListener('click', toggleReferenceTone);
 
 function toggleReferenceTone() {
-    if (isPlayingRef) {
-        stopReferenceTone();
-    } else {
-        playReferenceTone();
-    }
+    if (isPlayingRef) stopReferenceTone();
+    else playReferenceTone();
 }
 
 function playReferenceTone() {
     if (!selectedString) {
-        tuningStatus.textContent = 'Selecciona una cuerda primero';
+        tuningStatus.textContent = 'selecciona una cuerda';
         return;
     }
-
     const target = STRINGS[selectedString];
     const ctx = new (window.AudioContext || window.webkitAudioContext)();
-
     refOscillator = ctx.createOscillator();
     const gainNode = ctx.createGain();
-
     refOscillator.type = 'sine';
     refOscillator.frequency.setValueAtTime(target.freq, ctx.currentTime);
     gainNode.gain.setValueAtTime(0.3, ctx.currentTime);
-
     refOscillator.connect(gainNode);
     gainNode.connect(ctx.destination);
     refOscillator.start();
-
-    // fade out after 2 seconds
     gainNode.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 2);
     refOscillator.stop(ctx.currentTime + 2.1);
-
     isPlayingRef = true;
-    refBtn.querySelector('.ref-text').textContent = `Sonando ${target.note}${target.octave}...`;
-
+    refBtn.querySelector('.ref-text').textContent = `${target.note}${target.octave}...`;
     refOscillator.onended = () => {
         isPlayingRef = false;
-        refBtn.querySelector('.ref-text').textContent = 'Tono de referencia';
+        refBtn.querySelector('.ref-text').textContent = 'referencia';
     };
 }
 
 function stopReferenceTone() {
-    if (refOscillator) {
-        try { refOscillator.stop(); } catch (e) { /* already stopped */ }
-        refOscillator = null;
-    }
+    if (refOscillator) { try { refOscillator.stop(); } catch (e) {} refOscillator = null; }
     isPlayingRef = false;
-    refBtn.querySelector('.ref-text').textContent = 'Tono de referencia';
+    refBtn.querySelector('.ref-text').textContent = 'referencia';
 }
 
 // === RESET ===
@@ -387,7 +345,11 @@ function resetDisplay() {
     meterIndicator.style.left = '50%';
     meterIndicator.className = 'meter-indicator';
     centsDisplay.textContent = '0 cents';
-    tuningStatus.textContent = 'Selecciona una cuerda o activa el micrófono';
+    tuningStatus.textContent = 'selecciona una cuerda o activa el micrófono';
     tuningStatus.classList.remove('in-tune');
     tunerDisplay.classList.remove('in-tune');
 }
+
+// === INIT ===
+initMode();
+initTheme();

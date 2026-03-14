@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+  <defs>
+    <linearGradient id="bg_f" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#241106"/>
+      <stop offset="100%" stop-color="#5c2d0f"/>
+    </linearGradient>
+    <linearGradient id="bd_f" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ffd48b"/>
+      <stop offset="100%" stop-color="#ff8b3a"/>
+    </linearGradient>
+  </defs>
+  <rect width="48" height="48" fill="url(#bg_f)"/>
+  <rect x="1.5" y="1.5" width="45" height="45" fill="none" stroke="url(#bd_f)" stroke-width="2"/>
+  <rect x="4.5" y="4.5" width="39" height="39" fill="none" stroke="#8d4b1f" stroke-width="1"/>
+  <path d="M18 2.5 L24 6.5 L30 2.5" fill="none" stroke="#ffe5a8" stroke-width="1"/>
+  <path d="M18 45.5 L24 41.5 L30 45.5" fill="none" stroke="#ffb15d" stroke-width="1"/>
+  <path d="M2.5 18 L6.5 24 L2.5 30" fill="none" stroke="#ffe5a8" stroke-width="1"/>
+  <path d="M45.5 18 L41.5 24 L45.5 30" fill="none" stroke="#ffb15d" stroke-width="1"/>
+  <polygon points="1,1 10,1 1,10" fill="#ffe5a8" opacity="0.9"/>
+  <polygon points="47,1 38,1 47,10" fill="#ffb15d" opacity="0.9"/>
+  <polygon points="1,47 1,38 10,47" fill="#ffb15d" opacity="0.9"/>
+  <polygon points="47,47 38,47 47,38" fill="#ffe5a8" opacity="0.9"/>
+</svg>

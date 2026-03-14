@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" data-theme="light" data-style="brutal">
+<html lang="es" data-theme="light" data-mode="brutal">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,23 +11,8 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <div class="header-left">
-            <h1>ukulele tuner</h1>
-            <span class="brand">meowrhino</span>
-        </div>
-        <div class="header-controls">
-            <button class="style-toggle" id="styleToggle" aria-label="Cambiar estilo">
-                <span class="style-label" id="styleLabel">brutal</span>
-            </button>
-            <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema">
-                <span class="theme-icon">◐</span>
-            </button>
-        </div>
-    </header>
-
     <main>
-        <section class="tuner-display">
+        <section class="tuner-display" id="tunerDisplay">
             <div class="note-display" id="noteDisplay">—</div>
             <div class="frequency" id="freqDisplay">Hz</div>
             <div class="meter-container">
@@ -47,7 +32,6 @@
         </section>
 
         <section class="strings-section">
-            <h2>cuerdas</h2>
             <div class="strings-grid">
                 <button class="string-btn" data-note="G4" data-freq="392.00" data-string="4">
                     <span class="string-number">4</span>
@@ -75,18 +59,68 @@
         <section class="controls">
             <button class="mic-btn" id="micBtn">
                 <span class="mic-icon">🎤</span>
-                <span class="mic-text">Activar micrófono</span>
+                <span class="mic-text">micrófono</span>
             </button>
             <button class="ref-btn" id="refBtn">
                 <span class="ref-icon">🔊</span>
-                <span class="ref-text">Tono de referencia</span>
+                <span class="ref-text">referencia</span>
             </button>
         </section>
     </main>
 
-    <footer>
-        <a href="https://meowrhino.studio" target="_blank" rel="noopener">meowrhino.studio</a>
-    </footer>
+    <!-- Floating settings button -->
+    <button class="settings-btn" id="settingsBtn" aria-label="Configuración">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+    </button>
+
+    <!-- Modal -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal" id="modal">
+            <div class="modal-header">
+                <span class="modal-title">modo</span>
+                <button class="modal-close" id="modalClose">×</button>
+            </div>
+            <div class="modes-grid">
+                <button class="mode-btn" data-mode="brutal">
+                    <span class="mode-preview mode-preview-brutal"></span>
+                    <span class="mode-name">brutal</span>
+                </button>
+                <button class="mode-btn" data-mode="minimal">
+                    <span class="mode-preview mode-preview-minimal"></span>
+                    <span class="mode-name">minimal</span>
+                </button>
+                <button class="mode-btn" data-mode="fuego">
+                    <span class="mode-preview mode-preview-fuego"></span>
+                    <span class="mode-name">fuego</span>
+                </button>
+                <button class="mode-btn" data-mode="agua">
+                    <span class="mode-preview mode-preview-agua"></span>
+                    <span class="mode-name">agua</span>
+                </button>
+                <button class="mode-btn" data-mode="tierra">
+                    <span class="mode-preview mode-preview-tierra"></span>
+                    <span class="mode-name">tierra</span>
+                </button>
+                <button class="mode-btn" data-mode="aire">
+                    <span class="mode-preview mode-preview-aire"></span>
+                    <span class="mode-name">aire</span>
+                </button>
+                <button class="mode-btn" data-mode="eter">
+                    <span class="mode-preview mode-preview-eter"></span>
+                    <span class="mode-name">éter</span>
+                </button>
+            </div>
+            <div class="modal-theme-row" id="themeRow">
+                <span class="modal-theme-label">tema</span>
+                <button class="theme-toggle-btn" id="themeToggle">
+                    <span class="theme-icon" id="themeIcon">◐</span>
+                </button>
+            </div>
+            <div class="modal-brand">
+                <a href="https://meowrhino.studio" target="_blank" rel="noopener">meowrhino.studio</a>
+            </div>
+        </div>
+    </div>
 
     <script src="app.js"></script>
 </body>
