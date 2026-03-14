@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+  <defs>
+    <linearGradient id="bg_w" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#120c06"/>
+      <stop offset="100%" stop-color="#1e150c"/>
+    </linearGradient>
+    <linearGradient id="bd_w" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#d4a76a"/>
+      <stop offset="50%" stop-color="#c4956a"/>
+      <stop offset="100%" stop-color="#8b6540"/>
+    </linearGradient>
+  </defs>
+  <rect width="48" height="48" fill="url(#bg_w)"/>
+  <rect x="1.5" y="1.5" width="45" height="45" fill="none" stroke="url(#bd_w)" stroke-width="2"/>
+  <rect x="4" y="4" width="40" height="40" fill="none" stroke="#6b4f30" stroke-width="0.8"/>
+  <circle cx="5" cy="5" r="2" fill="#d4a76a" opacity="0.4"/>
+  <circle cx="43" cy="5" r="2" fill="#c4956a" opacity="0.4"/>
+  <circle cx="5" cy="43" r="2" fill="#c4956a" opacity="0.4"/>
+  <circle cx="43" cy="43" r="2" fill="#d4a76a" opacity="0.4"/>
+  <line x1="14" y1="1.5" x2="14" y2="4" stroke="#d4a76a" stroke-width="0.5" opacity="0.5"/>
+  <line x1="24" y1="1.5" x2="24" y2="4" stroke="#d4a76a" stroke-width="0.5" opacity="0.5"/>
+  <line x1="34" y1="1.5" x2="34" y2="4" stroke="#d4a76a" stroke-width="0.5" opacity="0.5"/>
+  <line x1="14" y1="44" x2="14" y2="46.5" stroke="#8b6540" stroke-width="0.5" opacity="0.5"/>
+  <line x1="24" y1="44" x2="24" y2="46.5" stroke="#8b6540" stroke-width="0.5" opacity="0.5"/>
+  <line x1="34" y1="44" x2="34" y2="46.5" stroke="#8b6540" stroke-width="0.5" opacity="0.5"/>
+</svg>

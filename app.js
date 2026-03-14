@@ -16,15 +16,18 @@ const ALL_NOTES = [
     { note: 'A#', freq: 466.16 }, { note: 'B', freq: 493.88 },
 ];
 
-const ELEMENT_MODES = ['fuego', 'agua', 'tierra', 'aire', 'eter'];
+const VALID_MODES = ['fuego', 'tierra', 'metal', 'agua', 'madera'];
+const VALID_THEMES = ['brutal', 'minimal', 'claro', 'oscuro'];
 
 // state
 let audioCtx = null;
 let analyser = null;
 let micStream = null;
+let pitchBuffer = null;
 let isListening = false;
 let selectedString = null;
 let animFrame = null;
+let refAudioCtx = null;
 let refOscillator = null;
 let isPlayingRef = false;
 
@@ -40,105 +43,52 @@ const tunerDisplay = document.getElementById('tunerDisplay');
 const settingsBtn = document.getElementById('settingsBtn');
 const modalOverlay = document.getElementById('modalOverlay');
 const modalClose = document.getElementById('modalClose');
-const themeToggle = document.getElementById('themeToggle');
-const themeIcon = document.getElementById('themeIcon');
-const themeRow = document.getElementById('themeRow');
 const modeBtns = document.querySelectorAll('.mode-btn');
+const themeBtns = document.querySelectorAll('.theme-btn');
 const stringBtns = document.querySelectorAll('.string-btn');
 
-// === MODE SYSTEM ===
-function initMode() {
-    const saved = localStorage.getItem('meowrhino-ukulele-mode') || 'brutal';
-    setMode(saved);
+// === MODE + THEME (2-axis) ===
+function initSettings() {
+    const savedMode = localStorage.getItem('mw-uku-mode');
+    const savedTheme = localStorage.getItem('mw-uku-theme');
+    setMode(VALID_MODES.includes(savedMode) ? savedMode : 'fuego');
+    setTheme(VALID_THEMES.includes(savedTheme) ? savedTheme : 'brutal');
 }
 
 function setMode(mode) {
     document.documentElement.setAttribute('data-mode', mode);
-    localStorage.setItem('meowrhino-ukulele-mode', mode);
-
-    // element modes force dark
-    if (ELEMENT_MODES.includes(mode)) {
-        document.documentElement.setAttribute('data-theme', 'dark');
-        themeRow.classList.add('hidden');
-    } else {
-        themeRow.classList.remove('hidden');
-        const savedTheme = localStorage.getItem('meowrhino-ukulele-theme') || 'light';
-        document.documentElement.setAttribute('data-theme', savedTheme);
-    }
-
-    updateModeButtons();
-    updateThemeIcon();
+    localStorage.setItem('mw-uku-mode', mode);
+    modeBtns.forEach(b => b.classList.toggle('active', b.dataset.mode === mode));
 }
 
-function updateModeButtons() {
-    const current = document.documentElement.getAttribute('data-mode');
-    modeBtns.forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.mode === current);
-    });
+function setTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('mw-uku-theme', theme);
+    themeBtns.forEach(b => b.classList.toggle('active', b.dataset.theme === theme));
 }
 
-modeBtns.forEach(btn => {
-    btn.addEventListener('click', () => setMode(btn.dataset.mode));
-});
-
-// === THEME ===
-function initTheme() {
-    const savedTheme = localStorage.getItem('meowrhino-ukulele-theme') || 'light';
-    const mode = document.documentElement.getAttribute('data-mode');
-    if (!ELEMENT_MODES.includes(mode)) {
-        document.documentElement.setAttribute('data-theme', savedTheme);
-    }
-    updateThemeIcon();
-}
-
-function toggleTheme() {
-    const current = document.documentElement.getAttribute('data-theme');
-    const next = current === 'dark' ? 'light' : 'dark';
-    document.documentElement.setAttribute('data-theme', next);
-    localStorage.setItem('meowrhino-ukulele-theme', next);
-    updateThemeIcon();
-}
-
-function updateThemeIcon() {
-    const theme = document.documentElement.getAttribute('data-theme');
-    themeIcon.textContent = theme === 'dark' ? '◑' : '◐';
-}
-
-themeToggle.addEventListener('click', toggleTheme);
+modeBtns.forEach(b => b.addEventListener('click', () => setMode(b.dataset.mode)));
+themeBtns.forEach(b => b.addEventListener('click', () => setTheme(b.dataset.theme)));
 
 // === MODAL ===
-settingsBtn.addEventListener('click', () => {
-    modalOverlay.classList.add('open');
-});
-
-modalClose.addEventListener('click', () => {
-    modalOverlay.classList.remove('open');
-});
-
-modalOverlay.addEventListener('click', (e) => {
-    if (e.target === modalOverlay) modalOverlay.classList.remove('open');
-});
-
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') modalOverlay.classList.remove('open');
-});
+settingsBtn.addEventListener('click', () => modalOverlay.classList.add('open'));
+modalClose.addEventListener('click', () => modalOverlay.classList.remove('open'));
+modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) modalOverlay.classList.remove('open'); });
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') modalOverlay.classList.remove('open'); });
 
 // === STRING SELECTION ===
 stringBtns.forEach(btn => {
     btn.addEventListener('click', () => {
         const noteKey = btn.dataset.note;
-
         if (selectedString === noteKey) {
             selectedString = null;
             btn.classList.remove('active');
             if (!isListening) resetDisplay();
             return;
         }
-
         stringBtns.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         selectedString = noteKey;
-
         const target = STRINGS[noteKey];
         noteDisplay.textContent = target.note;
         noteDisplay.style.color = '';
@@ -158,20 +108,26 @@ async function toggleMic() {
 async function startListening() {
     try {
         audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        await audioCtx.resume();
         micStream = await navigator.mediaDevices.getUserMedia({ audio: true });
         const source = audioCtx.createMediaStreamSource(micStream);
         analyser = audioCtx.createAnalyser();
         analyser.fftSize = 4096;
         source.connect(analyser);
+        pitchBuffer = new Float32Array(analyser.fftSize);
         isListening = true;
         micBtn.classList.add('active');
+        micBtn.setAttribute('aria-pressed', 'true');
         micBtn.querySelector('.mic-text').textContent = 'escuchando';
         tuningStatus.textContent = selectedString
             ? `escuchando — cuerda ${STRINGS[selectedString].string}`
             : 'escuchando — modo libre';
         detect();
     } catch (err) {
-        tuningStatus.textContent = 'error: micrófono no disponible';
+        console.error('Mic error:', err);
+        tuningStatus.textContent = err.name === 'NotAllowedError'
+            ? 'error: permiso denegado'
+            : 'error: micrófono no disponible';
     }
 }
 
@@ -180,26 +136,27 @@ function stopListening() {
     if (animFrame) cancelAnimationFrame(animFrame);
     if (micStream) { micStream.getTracks().forEach(t => t.stop()); micStream = null; }
     if (audioCtx) { audioCtx.close(); audioCtx = null; }
+    analyser = null;
+    pitchBuffer = null;
     micBtn.classList.remove('active');
+    micBtn.setAttribute('aria-pressed', 'false');
     micBtn.querySelector('.mic-text').textContent = 'micrófono';
     tunerDisplay.classList.remove('in-tune');
     if (!selectedString) resetDisplay();
 }
 
-// === PITCH DETECTION ===
+// === PITCH DETECTION (AMDF + parabolic interpolation) ===
 function detect() {
-    if (!isListening) return;
-    const bufLen = analyser.fftSize;
-    const buf = new Float32Array(bufLen);
-    analyser.getFloatTimeDomainData(buf);
+    if (!isListening || !analyser) return;
+    analyser.getFloatTimeDomainData(pitchBuffer);
 
     let rms = 0;
-    for (let i = 0; i < bufLen; i++) rms += buf[i] * buf[i];
-    rms = Math.sqrt(rms / bufLen);
+    for (let i = 0; i < pitchBuffer.length; i++) rms += pitchBuffer[i] * pitchBuffer[i];
+    rms = Math.sqrt(rms / pitchBuffer.length);
 
     if (rms < 0.01) { animFrame = requestAnimationFrame(detect); return; }
 
-    const pitch = autoCorrelate(buf, audioCtx.sampleRate);
+    const pitch = autoCorrelate(pitchBuffer, audioCtx.sampleRate);
     if (pitch > 0) updateTuner(pitch);
     animFrame = requestAnimationFrame(detect);
 }
@@ -211,7 +168,7 @@ function autoCorrelate(buf, sampleRate) {
     const correlations = new Float32Array(MAX_SAMPLES);
     let lastCorrelation = 1;
 
-    for (let offset = 0; offset < MAX_SAMPLES; offset++) {
+    for (let offset = 1; offset < MAX_SAMPLES; offset++) {
         let correlation = 0;
         for (let i = 0; i < MAX_SAMPLES; i++) {
             correlation += Math.abs(buf[i] - buf[i + offset]);
@@ -226,13 +183,20 @@ function autoCorrelate(buf, sampleRate) {
                 bestOffset = offset;
             }
         } else if (foundGoodCorrelation) {
-            const shift = (correlations[bestOffset + 1] - correlations[bestOffset - 1]) / correlations[bestOffset];
-            return sampleRate / (bestOffset + 8 * shift);
+            if (bestOffset > 1 && bestOffset < MAX_SAMPLES - 1) {
+                const a = correlations[bestOffset - 1];
+                const b = correlations[bestOffset];
+                const c = correlations[bestOffset + 1];
+                const denom = a - 2 * b + c;
+                const shift = denom !== 0 ? (a - c) / (2 * denom) : 0;
+                return sampleRate / (bestOffset + shift);
+            }
+            return sampleRate / bestOffset;
         }
         lastCorrelation = correlation;
     }
 
-    if (bestCorrelation > 0.01) return sampleRate / bestOffset;
+    if (bestCorrelation > 0.5 && bestOffset > 0) return sampleRate / bestOffset;
     return -1;
 }
 
@@ -253,8 +217,7 @@ function updateTuner(detectedFreq) {
     freqDisplay.textContent = `${detectedFreq.toFixed(1)} Hz`;
 
     const clampedCents = Math.max(-50, Math.min(50, cents));
-    const pct = ((clampedCents + 50) / 100) * 100;
-    meterIndicator.style.left = `${pct}%`;
+    meterIndicator.style.left = `${clampedCents + 50}%`;
 
     const sign = cents >= 0 ? '+' : '';
     centsDisplay.textContent = `${sign}${cents.toFixed(0)} cents`;
@@ -272,11 +235,11 @@ function updateTuner(detectedFreq) {
         tuningStatus.classList.add('in-tune');
     } else if (absCents <= 15) {
         meterIndicator.classList.add('close');
-        noteDisplay.style.color = 'var(--close)';
+        noteDisplay.style.color = '#d97706';
         tuningStatus.textContent = cents > 0 ? 'un poco alto ♯' : 'un poco bajo ♭';
     } else {
         meterIndicator.classList.add('out-tune');
-        noteDisplay.style.color = 'var(--out-tune)';
+        noteDisplay.style.color = '#dc2626';
         tuningStatus.textContent = cents > 0 ? 'muy alto ♯' : 'muy bajo ♭';
     }
 }
@@ -298,7 +261,7 @@ function getCents(freq, refFreq) {
     return 1200 * Math.log2(freq / refFreq);
 }
 
-// === REFERENCE TONE ===
+// === REFERENCE TONE (reuses single AudioContext) ===
 refBtn.addEventListener('click', toggleReferenceTone);
 
 function toggleReferenceTone() {
@@ -307,22 +270,24 @@ function toggleReferenceTone() {
 }
 
 function playReferenceTone() {
-    if (!selectedString) {
-        tuningStatus.textContent = 'selecciona una cuerda';
-        return;
-    }
+    if (!selectedString) { tuningStatus.textContent = 'selecciona una cuerda'; return; }
     const target = STRINGS[selectedString];
-    const ctx = new (window.AudioContext || window.webkitAudioContext)();
-    refOscillator = ctx.createOscillator();
-    const gainNode = ctx.createGain();
+
+    if (!refAudioCtx || refAudioCtx.state === 'closed') {
+        refAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+
+    refOscillator = refAudioCtx.createOscillator();
+    const gainNode = refAudioCtx.createGain();
     refOscillator.type = 'sine';
-    refOscillator.frequency.setValueAtTime(target.freq, ctx.currentTime);
-    gainNode.gain.setValueAtTime(0.3, ctx.currentTime);
+    refOscillator.frequency.setValueAtTime(target.freq, refAudioCtx.currentTime);
+    gainNode.gain.setValueAtTime(0.3, refAudioCtx.currentTime);
     refOscillator.connect(gainNode);
-    gainNode.connect(ctx.destination);
+    gainNode.connect(refAudioCtx.destination);
     refOscillator.start();
-    gainNode.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 2);
-    refOscillator.stop(ctx.currentTime + 2.1);
+    gainNode.gain.exponentialRampToValueAtTime(0.001, refAudioCtx.currentTime + 2);
+    refOscillator.stop(refAudioCtx.currentTime + 2.1);
+
     isPlayingRef = true;
     refBtn.querySelector('.ref-text').textContent = `${target.note}${target.octave}...`;
     refOscillator.onended = () => {
@@ -332,7 +297,10 @@ function playReferenceTone() {
 }
 
 function stopReferenceTone() {
-    if (refOscillator) { try { refOscillator.stop(); } catch (e) {} refOscillator = null; }
+    if (refOscillator) {
+        try { refOscillator.stop(); } catch (e) { /* already ended */ }
+        refOscillator = null;
+    }
     isPlayingRef = false;
     refBtn.querySelector('.ref-text').textContent = 'referencia';
 }
@@ -351,5 +319,4 @@ function resetDisplay() {
 }
 
 // === INIT ===
-initMode();
-initTheme();
+initSettings();
