@@ -487,6 +487,7 @@ main {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     padding: 1.5rem;
     gap: 1.5rem;
     max-width: 460px;
@@ -676,28 +677,57 @@ main {
     .settings-btn:hover svg { transform: rotate(45deg); }
 }
 .settings-btn:active { transform: translate(1px, 1px); box-shadow: var(--shadow-active); }
+.settings-btn.active { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+.settings-btn.active svg { stroke: var(--bg); }
 .settings-btn svg { transition: transform 0.4s ease; }
 
 [data-theme="oscuro"] .settings-btn, [data-theme="claro"] .settings-btn { border: 1px solid var(--border); background: transparent; }
+[data-theme="oscuro"] .settings-btn.active, [data-theme="claro"] .settings-btn.active { background: var(--accent); border-color: var(--accent); }
+[data-theme="oscuro"] .settings-panel, [data-theme="claro"] .settings-panel { border: 1px solid var(--border); }
 
 /* ============================================
-   SETTINGS PANEL (inline, part of scroll)
+   SETTINGS PANEL (overlay: right on desktop, bottom on mobile)
    ============================================ */
 .settings-panel {
-    width: 100%;
-    display: grid;
-    grid-template-rows: 0fr;
-    transition: grid-template-rows 0.35s ease;
-    overflow: hidden;
-}
-.settings-panel > * {
-    overflow: hidden;
+    position: fixed;
+    z-index: 50;
+    background: var(--bg);
+    border: var(--border-w) solid var(--border);
+    box-shadow: var(--shadow);
+    padding: 1.2rem;
+    transition: transform 0.35s ease, opacity 0.35s ease;
+    opacity: 0;
+    pointer-events: none;
+    overflow-y: auto;
+    /* Desktop: slide from right */
+    top: 0; right: 0; bottom: 0;
+    width: 260px;
+    border-radius: 0;
+    transform: translateX(100%);
 }
 .settings-panel.open {
-    grid-template-rows: 1fr;
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(0);
+}
+/* Mobile: slide from bottom */
+@media (max-width: 500px) {
+    .settings-panel {
+        top: auto; left: 0; right: 0; bottom: 0;
+        width: 100%;
+        max-height: 60vh;
+        transform: translateY(100%);
+        border-radius: var(--radius) var(--radius) 0 0;
+        border-bottom: none;
+    }
+    .settings-panel.open {
+        transform: translateY(0);
+    }
 }
 .settings-panel-inner {
-    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
 }
 .settings-section-title {
     font-family: var(--font-head); font-size: 0.65rem; font-weight: 700;
@@ -705,6 +735,19 @@ main {
     display: block; margin-bottom: 0.5rem;
 }
 .settings-divider { height: 1px; background: var(--border); opacity: 0.3; margin: 0.75rem 0; }
+/* Backdrop */
+.settings-backdrop {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.3);
+    z-index: 49;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.35s ease;
+}
+.settings-backdrop.open {
+    opacity: 1;
+    pointer-events: auto;
+}
 
 .modes-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.4rem; }
 .themes-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.4rem; }

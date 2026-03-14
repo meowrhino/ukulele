@@ -42,6 +42,7 @@ const refBtn = document.getElementById('refBtn');
 const tunerDisplay = document.getElementById('tunerDisplay');
 const settingsBtn = document.getElementById('settingsBtn');
 const settingsPanel = document.getElementById('settingsPanel');
+const settingsBackdrop = document.getElementById('settingsBackdrop');
 const modeBtns = document.querySelectorAll('.mode-btn');
 const themeBtns = document.querySelectorAll('.theme-btn');
 const stringBtns = document.querySelectorAll('.string-btn');
@@ -68,8 +69,19 @@ modeBtns.forEach(b => b.addEventListener('click', () => setMode(b.dataset.mode))
 themeBtns.forEach(b => b.addEventListener('click', () => setTheme(b.dataset.theme)));
 
 // === SETTINGS PANEL ===
-settingsBtn.addEventListener('click', () => settingsPanel.classList.toggle('open'));
-document.addEventListener('keydown', (e) => { if (e.key === 'Escape') settingsPanel.classList.remove('open'); });
+function toggleSettings() {
+    const open = settingsPanel.classList.toggle('open');
+    settingsBackdrop.classList.toggle('open', open);
+    settingsBtn.classList.toggle('active', open);
+}
+function closeSettings() {
+    settingsPanel.classList.remove('open');
+    settingsBackdrop.classList.remove('open');
+    settingsBtn.classList.remove('active');
+}
+settingsBtn.addEventListener('click', toggleSettings);
+settingsBackdrop.addEventListener('click', closeSettings);
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeSettings(); });
 
 // === STRING SELECTION ===
 stringBtns.forEach(btn => {
