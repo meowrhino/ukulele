@@ -49,10 +49,10 @@ const stringBtns = document.querySelectorAll('.string-btn');
 
 // === MODE + THEME (2-axis) ===
 function initSettings() {
-    const savedMode = localStorage.getItem('mw-uku-mode');
-    const savedTheme = localStorage.getItem('mw-uku-theme');
-    setMode(VALID_MODES.includes(savedMode) ? savedMode : 'fuego');
-    setTheme(VALID_THEMES.includes(savedTheme) ? savedTheme : 'brutal');
+    const randomMode = VALID_MODES[Math.floor(Math.random() * VALID_MODES.length)];
+    const randomTheme = VALID_THEMES[Math.floor(Math.random() * VALID_THEMES.length)];
+    setMode(randomMode);
+    setTheme(randomTheme);
 }
 
 function setMode(mode) {
