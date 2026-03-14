@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ukulele tuner — meowrhino</title>
+    <meta name="description" content="Afinador de ukulele online — meowrhino studio">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@400;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="header-left">
+            <h1>ukulele tuner</h1>
+            <span class="brand">meowrhino</span>
+        </div>
+        <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema">
+            <span class="theme-icon">◐</span>
+        </button>
+    </header>
+
+    <main>
+        <section class="tuner-display">
+            <div class="note-display" id="noteDisplay">—</div>
+            <div class="frequency" id="freqDisplay">Hz</div>
+            <div class="meter-container">
+                <div class="meter-labels">
+                    <span>♭</span>
+                    <span>✓</span>
+                    <span>♯</span>
+                </div>
+                <div class="meter">
+                    <div class="meter-bar">
+                        <div class="meter-indicator" id="meterIndicator"></div>
+                    </div>
+                </div>
+                <div class="cents" id="centsDisplay">0 cents</div>
+            </div>
+            <div class="tuning-status" id="tuningStatus">Selecciona una cuerda o activa el micrófono</div>
+        </section>
+
+        <section class="strings-section">
+            <h2>cuerdas</h2>
+            <div class="strings-grid">
+                <button class="string-btn" data-note="G4" data-freq="392.00" data-string="4">
+                    <span class="string-number">4</span>
+                    <span class="string-note">G</span>
+                    <span class="string-freq">392 Hz</span>
+                </button>
+                <button class="string-btn" data-note="C4" data-freq="261.63" data-string="3">
+                    <span class="string-number">3</span>
+                    <span class="string-note">C</span>
+                    <span class="string-freq">262 Hz</span>
+                </button>
+                <button class="string-btn" data-note="E4" data-freq="329.63" data-string="2">
+                    <span class="string-number">2</span>
+                    <span class="string-note">E</span>
+                    <span class="string-freq">330 Hz</span>
+                </button>
+                <button class="string-btn" data-note="A4" data-freq="440.00" data-string="1">
+                    <span class="string-number">1</span>
+                    <span class="string-note">A</span>
+                    <span class="string-freq">440 Hz</span>
+                </button>
+            </div>
+        </section>
+
+        <section class="controls">
+            <button class="mic-btn" id="micBtn">
+                <span class="mic-icon">🎤</span>
+                <span class="mic-text">Activar micrófono</span>
+            </button>
+            <button class="ref-btn" id="refBtn">
+                <span class="ref-icon">🔊</span>
+                <span class="ref-text">Tono de referencia</span>
+            </button>
+        </section>
+    </main>
+
+    <footer>
+        <a href="https://meowrhino.studio" target="_blank" rel="noopener">meowrhino.studio</a>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
